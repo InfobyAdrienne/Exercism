@@ -1,17 +1,15 @@
 #!/usr/bin/env bash
 
-# if ? is used at the end of the sentence / if ? is present, reply "Sure."
+string="${1%"${1##*[![:space:]]}"}"
 
-if [[ $1 =~ ^[A-Z]+$ ]] && [[ $1 =~ "?" ]]; then 
-    echo "Calm down, I know what I'm doing!"
-elif [[ $1 =~ "?" ]]; then
-    echo "Sure."
-elif [[ $1 =~ ^[A-Z]+[^a-z?]*$ ]]; then
+if [[ $string =~ ^[^a-z?]*$ ]] && [[ $string =~ [A-Z] ]]; then
     echo "Whoa, chill out!"
-elif [[ -z "${1// }" ]]; then
-    echo "Fine. Be that way!" 
-elif [[ $1 =~ ^[A-Z]+$ ]] && [[ $1 =~ "?" ]]; then 
+elif [[ $string =~ ^[^a-z0-9]*\?$ ]] && [[ $string =~ [A-Z] ]]; then
     echo "Calm down, I know what I'm doing!"
+elif [[ $string =~ \?$ ]]; then
+    echo "Sure."
+elif [[ -z "${string//[$'\t\n\r ']}" ]]; then
+    echo "Fine. Be that way!"
 else
     echo "Whatever."
 fi
