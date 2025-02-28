@@ -1,35 +1,39 @@
 #!/usr/bin/env bash
 
-string=$1
+val=$1
+string="${val^^}"
+length="${string}"
 
-for (( i=0; i<${#string}; i++ )); do
-  echo "hello"
+arr=()
+
+for ((i = 0; i < length; i++)); do 
+  char="${string:i:1}"
+    if [[ "$char" =~ [AEIOULNRST] ]]; then
+      arr+=('1')
+    elif [[ $char =~ [BCMP] ]]; then
+      arr+=('3')
+    elif [[ $char =~ [DG] ]]; then
+      arr+=('2')
+    elif [[ $char =~ [FHVWY] ]]; then
+      arr+=('4')
+    elif [[ $char =~ [K] ]]; then
+      arr+=('5')
+    elif [[ $char =~ [JX] ]]; then
+      arr+=('8')
+    elif [[ $char =~ [QZ] ]]; then
+      arr+=('10')
+    else
+      arr+=('0')
+    fi
 done
 
-# something like the below
+for n in "${arr[@]}"
+do 
+  (( total += n ))
+done
 
-if "A" || "E" || "I" || "O" || "U" || "L" || "" ||
-  return 1
-elif "D" || "G" 
-  return 2
-elif "B" || "C" || "M" || "P
-  return 3
-elif "F" || "H" || "V" || "W" || "Y" 
-  return 4
-elif "K"
-  return 5
-elif "J" || "X"
-  return 8
-elif "Q" || "Z" 
-  return 10 
+if [[ $total -ne '0' ]]; then 
+  echo "$total"
 else
-  return 0 
-fi
-
-# A, E, I, O, U, L, N, R, S, T	1
-# D, G	2
-# B, C, M, P	3
-# F, H, V, W, Y	4
-# K	5
-# J, X	8
-# Q, Z	10
+  echo '0'
+fi 
