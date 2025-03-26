@@ -1,44 +1,35 @@
 #!/usr/bin/env bash
 
-number=36 # get the user entry 
+number=$1 # get the user entry 
 
-echo $number
 # convert the user entry to binary, tested this with the number 9
 # reverse the binary so the for loop works 
 result=$(echo "obase=2; $number" | bc )
 
 digits=($(echo $result | grep -o .))
 
-echo "Array elements:"
-
-echo "${digits[@]}"
-
-echo "${digits[-1]}"
+length=${#digits[@]}
 
 empty_string=""
 
-if [[ "${digits[-1]}" -eq 0 ]]; then
+if (( length >= 1 )) && [[ "${digits[-1]}" -eq 1 ]]; then
   empty_string+="wink"
-else 
-  echo "hello"
+fi 
+
+if (( length >= 2 )) && [[ "${digits[-2]}" -eq 1 ]]; then
+  empty_string+="double blink"
+fi 
+
+if (( length >= 3 )) && [[ "${digits[-3]}" -eq 1 ]]; then
+  empty_string+="close your eyes"
+fi 
+
+if (( length >= 4 )) && [[ "${digits[-4]}" -eq 4 ]]; then
+  empty_string+="jump"
 fi
 
+if (( length >= 5 )) && [[ "${digits[-5]}" -eq 1 ]]; then
+  echo $empty_string | rev
+fi 
+
 echo $empty_string
-    
-# for digit in "${digits[@]}"; do
-#     echo "$digit"
-#       if 
-# done
-
-# echo $result
-
-# echo ${result[2]}
-
-# empty_string=""
-
-# for ((i = ${result} ; i < max ; i++ )); 
-#   do echo "$i"; 
-#   if ${result}[-1]
-# done
-
-
